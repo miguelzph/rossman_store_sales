@@ -130,4 +130,3 @@ dmypy.json
 
 # model
 model/model_rossmann_random.pkl
-webapp/

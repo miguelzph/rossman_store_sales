@@ -30,7 +30,7 @@ class Rossmann(object):
         df01['date'] = pd.to_datetime(df01['date'])
 
         #competition_distance --> fill with a really big distante --> implies --> no competition
-        df01['competition_distance'].fillna(max(df01['competition_distance']) *
+        df01['competition_distance'].fillna(75000 *
                                             3,
                                             inplace=True)
 
@@ -175,28 +175,28 @@ class Rossmann(object):
         df05['assortment'] = df05['assortment'].map(assortment_dict)
 
         # day_of_week
-        len_day_of_week = len(df05['day_of_week'].unique())
+        len_day_of_week = 7
         df05['day_of_week_sin'] = df05['day_of_week'].apply(
             lambda x: np.sin(x * (2 * np.pi / len_day_of_week)))
         df05['day_of_week_cos'] = df05['day_of_week'].apply(
             lambda x: np.cos(x * (2 * np.pi / len_day_of_week)))
 
         # month
-        len_month = len(df05['month'].unique())
+        len_month = 12
         df05['month_sin'] = df05['month'].apply(
             lambda x: np.sin(x * (2 * np.pi / len_month)))
         df05['month_cos'] = df05['month'].apply(
             lambda x: np.cos(x * (2 * np.pi / len_month)))
 
         # day
-        len_day = len(df05['day'].unique())
+        len_day = 31
         df05['day_sin'] = df05['day'].apply(
             lambda x: np.sin(x * (2 * np.pi / len_day)))
         df05['day_cos'] = df05['day'].apply(
             lambda x: np.cos(x * (2 * np.pi / len_day)))
 
         # week_of_year
-        len_week_of_year = len(df05['week_of_year'].unique())
+        len_week_of_year = 52
         df05['week_of_year_sin'] = df05['week_of_year'].apply(
             lambda x: np.sin(x * (2 * np.pi / len_week_of_year)))
         df05['week_of_year_cos'] = df05['week_of_year'].apply(
