@@ -62,6 +62,6 @@
 ## 5. Deploy do Modelo
 - Deploy da API de previsão no Heroku 
 
-- Consulta de previsão via Telegram BOT
+- Consulta de previsão via Telegram BOT <br>
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/64989931/155896886-018fccfe-2258-4493-a62d-36a837fd5747.gif)
 
