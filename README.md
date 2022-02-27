@@ -1,5 +1,6 @@
 # ds_em_producao
 
-O repositorio contém os arquivos para um projeto de previsão de vendas ( Em andamento - Pendente Modelo em Produção) 
+O repositorio contém os arquivos para um projeto de previsão de vendas
 
-- Seguido o curso DS em produção da Comunidade DS
+READMME em andamento
+
