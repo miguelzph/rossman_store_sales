@@ -130,3 +130,14 @@ dmypy.json
 
 # model
 model/model_rossmann_random.pkl
+my_notebooks/m02_v01_rossman_sales_prediction.ipynb
+my_notebooks/m03_v01_rossman_sales_prediction.ipynb
+my_notebooks/m04_v01_rossman_sales_prediction.ipynb
+my_notebooks/m05_v01_rossman_sales_prediction.ipynb
+my_notebooks/m06_v01_rossman_sales_prediction.ipynb
+my_notebooks/m07_v01_rossman_sales_prediction.ipynb
+my_notebooks/m08_v01_rossman_sales_prediction.ipynb
+my_notebooks/m09_v01_rossman_sales_prediction.ipynb
+my_notebooks/teste.ipynb
+my_notebooks/submission_rossmann.csv
+

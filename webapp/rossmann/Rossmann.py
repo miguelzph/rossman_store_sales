@@ -1,229 +1,74 @@
-import pickle
+import pickle 
 import pandas as pd
-import numpy as np
-
-from inflection import underscore
 
 
-class Rossmann(object):
-
-    def __init__(self):
-        state = 1
-        self.competition_distance_scaler = pickle.load(
-            open('parameter/competition_distance_scaler.pkl', 'rb'))
-        self.competition_time_month_scaler = pickle.load(
-            open('parameter/competition_time_month_scaler.pkl', 'rb'))
-        self.year_scaler = pickle.load(
-            open('parameter/year_scaler.pkl', 'rb'))
-        self.promo_time_week_scaler = pickle.load(
-            open('parameter/promo_time_week_scaler.pkl', 'rb'))
-        self.store_type_encoding = pickle.load(
-            open('parameter/store_type_encoding.pkl', 'rb'))
-
-    def data_cleaning(self, df01):
-
-        # lower and separating by _
-        df01.columns = df01.columns.to_series().apply(
-            lambda x: underscore(x))
-
-        # to date
-        df01['date'] = pd.to_datetime(df01['date'])
-
-        #competition_distance --> fill with a really big distante --> implies --> no competition
-        df01['competition_distance'].fillna(75000 *
-                                            3,
-                                            inplace=True)
-
-        #### The next 4 "since" attributes --> Filling the respective label ( month, year) of the sale date
-        #### Because if since month = sale month --> the difference will be 0
-        #competition_open_since_month --> fill with the month of the sale
-        df01['competition_open_since_month'].fillna(
-            df01.loc[df01['competition_open_since_month'].isna(),
-                     'date'].dt.month,
-            inplace=True)
-
-        #competition_open_since_year --> fill with the year of the sale
-        df01['competition_open_since_year'].fillna(
-            df01.loc[df01['competition_open_since_year'].isna(),
-                     'date'].dt.year,
-            inplace=True)
-
-        #promo2_since_week --> fill with the week of the sale
-        df01['promo2_since_week'].fillna(
-            df01.loc[df01['promo2_since_week'].isna(),
-                     'date'].dt.isocalendar().week,
-            inplace=True)
-
-        #promo2_since_year --> fill with the year of the sale
-        df01['promo2_since_year'].fillna(
-            df01.loc[df01['promo2_since_year'].isna(), 'date'].dt.year,
-            inplace=True)
-
-        #promo_interval
-        df01['promo_interval'] = df01['promo_interval'].str.replace(
-            'Sept', 'Sep')  # en_US format
-        df01['promo_interval'].fillna(
-            0, inplace=True)  # there's no promo_interval
-
-        #df01['sale_month'] = df01['date'].dt.strftime('%b') --> deletar
-        # creating a column to know if the sale is in a promo month
-        df01['is_promo'] = df01[['promo_interval', 'date']].apply(
-            lambda x: 0 if x['promo_interval'] == 0 else 1
-            if x['date'].strftime('%b') in x['promo_interval'] else 0,
-            axis=1)
-
-        df01['competition_open_since_month'] = df01[
-            'competition_open_since_month'].astype('int64')
-        df01['competition_open_since_year'] = df01[
-            'competition_open_since_year'].astype('int64')
-
-        df01['promo2_since_week'] = df01['promo2_since_week'].astype('int64')
-        df01['promo2_since_year'] = df01['promo2_since_year'].astype('int64')
-
-        return df01
-
-    def feature_engineering(self, df02):
-
-        # year
-        df02['year'] = df02['date'].dt.year
-
-        # month
-        df02['month'] = df02['date'].dt.month
-
-        # day
-        df02['day'] = df02['date'].dt.day
-
-        # week of year
-        df02['week_of_year'] = df02['date'].dt.isocalendar().week
-
-        # year week
-        df02['year_week'] = df02['date'].dt.strftime('%Y-%V')
-
-        # competition since
-        df02['competition_since'] = pd.to_datetime(
-            df02['competition_open_since_year'].astype(str) + '-' +
-            df02['competition_open_since_month'].astype(str),
-            format='%Y-%m')
-
-        df02['competition_time_month'] = (
-            (df02['date'] - df02['competition_since']) / 30).dt.days
-
-        # promo since -- > needs a day of week to transform to date
-        df02['promo_since'] = pd.to_datetime(
-            df02['promo2_since_year'].astype(str) + '-' +
-            df02['promo2_since_week'].astype(str) + '-0',
-            format='%G-%V-%w')
-
-        df02['promo_time_week'] = ((df02['date'] - df02['promo_since']) /
-                                   7).dt.days  # how many weeks in promo
-
-        # assorment
-        dic_assorment = {'a': 'basic', 'b': 'extra', 'c': 'extended'}
-        df02['assortment'] = df02['assortment'].replace(dic_assorment)
-
-        # state holiday
-        dic_holidays = {
-            'a': 'public_holiday',
-            'b': 'easter_holiday',
-            'c': 'christmas',
-            '0': 'regular_day'
-        }
-        df02['state_holiday'] = df02['state_holiday'].replace(dic_holidays)
-
-        # removing promo_inverval
-        df02 = df02.drop(columns=['promo_interval'])
-
-        # filter line
-        df02 = df02[df02['open'] != 0]
-
-        # filter columns
-        cols_drop = ['open']
-        df02 = df02.drop(columns=cols_drop)
-
-        return df02
-
-    def data_prepatarion(self, df05):
-
-        # competition_distance --> outliers
-        df05[
-            'competition_distance'] = self.competition_distance_scaler.transform(
-                df05[['competition_distance']].values)
-
-        # competition_time_month
-        df05[
-            'competition_time_month'] = self.competition_time_month_scaler.transform(
-                df05[['competition_time_month']].values)
-
-        # year
-        df05['year'] = self.year_scaler.transform(df05[['year']].values)
-
-        # promo_time_week
-        df05['promo_time_week'] = self.promo_time_week_scaler.transform(
-            df05[['promo_time_week']].values)
-
-        #state_holiday - One Hot Encoding
-        df05 = pd.get_dummies(df05,
-                              prefix=['state_holiday'],
-                              columns=['state_holiday'])
-
-        #store_type - Label Encoding
-        df05['store_type'] = self.store_type_encoding.transform(
-            df05['store_type'])
-
-        #assortment- Ordinal Encoding
-        assortment_dict = {'basic': 1, 'extra': 2, 'extended': 3}
-        df05['assortment'] = df05['assortment'].map(assortment_dict)
-
-        # day_of_week
-        len_day_of_week = 7
-        df05['day_of_week_sin'] = df05['day_of_week'].apply(
-            lambda x: np.sin(x * (2 * np.pi / len_day_of_week)))
-        df05['day_of_week_cos'] = df05['day_of_week'].apply(
-            lambda x: np.cos(x * (2 * np.pi / len_day_of_week)))
-
-        # month
-        len_month = 12
-        df05['month_sin'] = df05['month'].apply(
-            lambda x: np.sin(x * (2 * np.pi / len_month)))
-        df05['month_cos'] = df05['month'].apply(
-            lambda x: np.cos(x * (2 * np.pi / len_month)))
-
-        # day
-        len_day = 31
-        df05['day_sin'] = df05['day'].apply(
-            lambda x: np.sin(x * (2 * np.pi / len_day)))
-        df05['day_cos'] = df05['day'].apply(
-            lambda x: np.cos(x * (2 * np.pi / len_day)))
-
-        # week_of_year
-        len_week_of_year = 52
-        df05['week_of_year_sin'] = df05['week_of_year'].apply(
-            lambda x: np.sin(x * (2 * np.pi / len_week_of_year)))
-        df05['week_of_year_cos'] = df05['week_of_year'].apply(
-            lambda x: np.cos(x * (2 * np.pi / len_week_of_year)))
-
-        df05 = df05.drop(
-            columns=['day_of_week', 'month', 'day', 'week_of_year'])
-
-        # cols selected by boruta
-        cols_selected_boruta = [
-            'store', 'promo', 'store_type', 'assortment',
-            'competition_distance', 'competition_open_since_month',
-            'competition_open_since_year', 'promo2', 'promo2_since_week',
-            'promo2_since_year', 'competition_time_month', 'promo_time_week',
-            'day_of_week_sin', 'day_of_week_cos', 'month_cos', 'day_sin',
-            'day_cos', 'week_of_year_cos'
-        ]
-
-        #plus month sin and week of year sin
-        cols_selected_boruta.extend(['month_sin', 'week_of_year_sin'])
-
-        return df05[cols_selected_boruta]
+class InsuranceCrossSell(object):
     
-    def get_prediction(self, model, original_data,test_data):
-        # predictions
-        pred = model.predict(test_data)
+    def __init__(self):
+        self.rs_anual_premium = pickle.load(open('../parameters/rs_anual_premium.pkl', 'rb'))
+        self.rs_age = pickle.load(open('../parameters/rs_age.pkl', 'rb'))
+        self.minmax_vintage = pickle.load(open('../parameters/minmax_vintage.pkl', 'rb'))
+        self.encoder_region_code = pickle.load(open('../parameters/encoder_region_code.pkl', 'rb'))
+        self.encoder_policy_sales_channel = pickle.load(open('../parameters/encoder_policy_sales_channel.pkl', 'rb'))
+        self.encoder_vehicle_age = pickle.load(open('../parameters/encoder_vehicle_age.pkl', 'rb'))
+                                        
+#     def data_cleaning(self, data1):
         
-        original_data['prediction'] = np.expm1(pred)
+#         return data1
+    
+    
+    def feature_engineering(self, data2):
+        # changing vehicle_damage --> 1 == yes //// 0 == no
+        data2['vehicle_damage'] = data2['vehicle_damage'].apply(lambda x: 1 if x == 'Yes' else 0)
+
+        # vehicle_age
+        data2['vehicle_age'] = data2['vehicle_age'].apply(lambda x: 'over_2_years' if x == '> 2 Years' 
+                                                      else '1_to_2_years' if x == '1-2 Year' 
+                                                      else 'under_1_year')
+        
+        return data2
+        
+        
+    def data_preparation(self, data3):
+        data3 = data3.drop(columns=['id'])
+        
+        # annual_premium
+        data3['annual_premium'] = self.rs_anual_premium.transform(data3[['annual_premium']].values)
+
+        # age
+        data3['age'] = self.rs_age.transform(data3[['age']].values)
+
+        # vintage
+        data3['vintage'] = self.minmax_vintage.transform(data3[['vintage']].values)
+
+        # gender
+        data3['gender'] = data3['gender'].apply(lambda x: 1 if x == 'Male' 
+                                                      else 0)
+
+        # region_code
+        data3['region_code'] = self.encoder_region_code.transform(data3['region_code'].astype(str))
+
+
+        # policy_sales_channel
+        data3['policy_sales_channel'] = self.encoder_policy_sales_channel.transform(data3['policy_sales_channel'].astype(str))
+
+
+        # vehicle_age
+        # One Hot Encoding
+
+        vehicle_age_encoded = self.encoder_vehicle_age.transform(data3['vehicle_age'])
+        data3[self.encoder_vehicle_age.get_feature_names()] =  vehicle_age_encoded.values
+        data3 = data3.drop(columns=['vehicle_age'])
+
+        
+        return data3
+    
+    def get_prediction(self, model, original_data, prepared_data):
+        
+        # predictions
+        rank = model.predict_proba(prepared_data)
+        
+        original_data['ranking'] = rank
         
         return original_data.to_json(orient='records', date_format='iso')
+        
