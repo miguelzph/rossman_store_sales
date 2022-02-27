@@ -35,3 +35,33 @@ PromoInterval - Descreve os intervalos consecutivos em que a Promo2 é iniciada,
 
 ### Mapa mental de hipóteses
 <img src="/img/MindMapHypothesis.png" alt="Hypothesis" style="height: 720px; width:1366px;"/>
+
+### Hipóteses validadas
+
+1. Lojas com maior sortimento deveriam vender mais
+2. Lojas com competidores mais proximos deveriam vender menos
+3. Lojas que têm competidores mais tempo deveriam vender mais (estabilização)
+4. Lojas com promoções ativas por mais tempo deveriam vender mais
+5. Lojas com mais dias de promoção deveriam vender mais
+6. Lojas com mais promoções consecutivas deveriam vender mais
+7. Lojas abertas durante o feriado de Natal deveriam vender mais
+8. Lojas deveriam vender mais ao longo dos anos
+9. Lojas deveriam vender mais no segundo semestre do ano
+10. Lojas deveriam vender mais depois do dia 10 de cada mês
+11. Lojas deveriam vender menos aos finais de semana
+12. Lojas deveriam vender menos durante os feriados escolares
+
+## 4. Métricas de Machine Learning 
+
+![image](https://user-images.githubusercontent.com/64989931/155896420-9d2bbcd2-beb1-4035-a874-b85e62253bf0.png)
+
+### Predictions 
+![image](https://user-images.githubusercontent.com/64989931/155896416-2b2f95e9-a21a-4065-9160-22056720bc04.png)
+
+
+## 5. Deploy do Modelo
+- Deploy da API de previsão no Heroku 
+
+- Consulta de previsão via Telegram BOT
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/64989931/155896886-018fccfe-2258-4493-a62d-36a837fd5747.gif)
+
