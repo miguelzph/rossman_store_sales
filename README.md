@@ -1,3 +1,7 @@
+Veja o notebook completo: <a href="https://github.com/miguelzph/rossman_store_sales/blob/main/my_notebooks/m10_v01_rossman_sales_prediction.ipynb" title="Clique e acesse agora!">Notebook</a>
+
+
+
 ## 1. Contexto
 - Reunião Mensal de Resultados
 - CFO solicitou a previsão de vendas das próximas 6 semanas para cada loja
@@ -17,7 +21,7 @@
 
 ### Informações disponíveis
 
-<strong>Id</strong> - an Id that represents a (Store, Date) duple within the test set <br>
+<strong>Id</strong> - Id que representa a venda de uma loja em uma data específica
 <strong>Store</strong> - Id único da loja <br>
 <strong>Sales</strong> - O valor vendido para o dia (valor a ser previsto) <br>
 <strong>Customers</strong> - Quantidade de clientes que visitaram a loja em um dia <br>
@@ -68,3 +72,6 @@ https://t.me/SalesRossmannBOT <br>
 
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/64989931/155896886-018fccfe-2258-4493-a62d-36a837fd5747.gif)
 
+
+
+Veja o notebook completo: <a href="https://github.com/miguelzph/rossman_store_sales/blob/main/my_notebooks/m10_v01_rossman_sales_prediction.ipynb" title="Clique e acesse agora!">Notebook</a>
