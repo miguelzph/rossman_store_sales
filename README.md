@@ -1,4 +1,4 @@
-Veja o notebook completo: <a href="https://github.com/miguelzph/rossman_store_sales/blob/main/my_notebooks/m10_v01_rossman_sales_prediction.ipynb" title="Clique e acesse agora!">Notebook</a>
+Veja o notebook completo: <a href="https://nbviewer.org/github/miguelzph/rossman_store_sales/blob/main/my_notebooks/m10_v02_rossman_sales_prediction.ipynb" title="Clique e acesse agora!">Link do nbviewer</a>
 
 
 
@@ -72,6 +72,10 @@ https://t.me/SalesRossmannBOT <br>
 
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/64989931/155896886-018fccfe-2258-4493-a62d-36a837fd5747.gif)
 
+## 6. Próximos Passos
+- Melhorar a previsão de worst e best scenario de previsão do modelo
+- Workshop do modelo para os stakeholders
+- Coleta feedaback sobre a usabilidade
+- Diminuir o erro do modelo em 10%
 
-
-Veja o notebook completo: <a href="https://github.com/miguelzph/rossman_store_sales/blob/main/my_notebooks/m10_v01_rossman_sales_prediction.ipynb" title="Clique e acesse agora!">Notebook</a>
+Veja o notebook completo: <a href="https://nbviewer.org/github/miguelzph/rossman_store_sales/blob/main/my_notebooks/m10_v02_rossman_sales_prediction.ipynb" title="Clique e acesse agora!">Link do nbviewer</a>
