@@ -1,5 +1,4 @@
-Veja o notebook completo: <a href="https://nbviewer.org/github/miguelzph/rossman_store_sales/blob/main/my_notebooks/m10_v02_rossman_sales_prediction.ipynb" title="Clique e acesse agora!">Link do nbviewer</a>
-
+Veja o notebook completo: <a href="https://nbviewer.org/github/miguelzph/rossman_store_sales/blob/main/my_notebooks/m10_v02_rossman_sales_prediction.ipynb" title="Clique e acesse agora!" target="_blank" rel="noopener noreferrer">Link do nbviewer</a>
 
 
 ## 1. Contexto
@@ -78,4 +77,5 @@ https://t.me/SalesRossmannBOT <br>
 - Coleta feedaback sobre a usabilidade
 - Diminuir o erro do modelo em 10%
 
-Veja o notebook completo: <a href="https://nbviewer.org/github/miguelzph/rossman_store_sales/blob/main/my_notebooks/m10_v02_rossman_sales_prediction.ipynb" title="Clique e acesse agora!">Link do nbviewer</a>
+Veja o notebook completo: <a href="https://nbviewer.org/github/miguelzph/rossman_store_sales/blob/main/my_notebooks/m10_v02_rossman_sales_prediction.ipynb" title="Clique e acesse agora!" target="_blank" rel="noopener noreferrer">Link do nbviewer</a>
+
