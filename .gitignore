@@ -138,6 +138,9 @@ my_notebooks/m06_v01_rossman_sales_prediction.ipynb
 my_notebooks/m07_v01_rossman_sales_prediction.ipynb
 my_notebooks/m08_v01_rossman_sales_prediction.ipynb
 my_notebooks/m09_v01_rossman_sales_prediction.ipynb
+my_notebooks/m10_v01_rossman_sales_prediction.ipynb
 my_notebooks/teste.ipynb
-my_notebooks/submission_rossmann.csv
+my_notebooks/before_retrain_submission_rossmann.csv
+my_notebooks/after_retrain_submission_rossmann.csv
+
 
