@@ -4,6 +4,7 @@ attrs==21.3.0
 backcall==0.2.0
 bleach==4.1.0
 Boruta==0.3
+category-encoders==2.4.0
 certifi==2021.10.8
 cffi==1.15.0
 charset-normalizer==2.0.10
@@ -39,7 +40,9 @@ jupyter-latex-envs==1.4.6
 jupyter-nbextensions-configurator==0.4.1
 jupyterlab-pygments==0.1.2
 jupyterlab-widgets==1.0.2
+jupyterthemes==0.20.0
 kiwisolver==1.3.2
+lesscpy==0.15.0
 lxml==4.7.1
 MarkupSafe==2.0.1
 matplotlib==3.5.1
@@ -55,8 +58,10 @@ packaging==21.3
 pandas==1.3.5
 pandocfilters==1.5.0
 parso==0.8.3
+patsy==0.5.2
 pickleshare==0.7.5
 Pillow==8.4.0
+ply==3.11
 prometheus-client==0.12.0
 prompt-toolkit==3.0.24
 pycparser==2.21
@@ -72,12 +77,14 @@ pyzmq==22.3.0
 qtconsole==5.2.2
 QtPy==2.0.0
 requests==2.27.1
+rise==5.7.1
 scikit-learn==1.0.2
 scipy==1.7.3
 seaborn==0.11.2
 Send2Trash==1.8.0
 six==1.16.0
 sklearn==0.0
+statsmodels==0.13.2
 terminado==0.12.1
 testpath==0.5.0
 threadpoolctl==3.0.0
